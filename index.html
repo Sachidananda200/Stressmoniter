@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stress Level Quiz</title>
+    <title>Quiz Rating Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,8 +91,7 @@
 </head>
 <body>
     <div id="quiz-container">
-        <h1>Stress Level Quiz</h1>
-        <p id="tagline">Discover Your Stress Level</p>
+        <h1>Quiz Rating Game</h1>
         <p id="question"></p>
         <div id="rating">
             <input type="radio" name="rating" value="1" id="rating-1">
@@ -110,18 +109,55 @@
             <input type="radio" name="rating" value="5" id="rating-5">
             <label for="rating-5" class="rating-label">5</label>
         </div>
+
         <button id="next-button">Next</button>
         <p id="result">Quiz Complete!</p>
-
-        <a href="admin.html">Go to Admin Page</a>
     </div>
 
     <script>
-       
-        const questions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
-        for (const question of questions) {
-            question.answer = 0;
-        }
+        const questions = [
+            {
+                question: "How good was your day",
+                answer: 0,
+            },
+            {
+                question: "how good you rate your mental heralth today.",
+                answer: 0,
+            },
+            {
+                question: "how much have your moods or emotions changed recently",
+                answer: 0,
+            },
+            {
+                question: "How would you rate your anxiety or stress levels",
+                answer: 0,
+            },
+            {
+                question: "how would you rate the impact of specific stressors in your life",
+                answer: 0,
+            },
+            {
+                question: "rate your satisfaction with your relationships with friends and family",
+                answer: 0,
+            },
+            {
+                question: "rate your current self-esteem and self-confidence",
+                answer: 0,
+            },
+            {
+                question: "rate the intensity of any thoughts of self-harm or suicide",
+                answer: 0,
+            },
+            {
+                question: "Please rate your use of coping mechanisms",
+                answer: 0,
+            },
+            {
+                question: "how would you rate the impact of specific stressors in your life",
+                answer: 0,
+            },
+            
+        ];
 
         let currentQuestion = 0;
         const questionElement = document.getElementById("question");
@@ -131,7 +167,7 @@
 
         function showQuestion() {
             if (currentQuestion < questions.length) {
-                questionElement.textContent = questions[currentQuestion];
+                questionElement.textContent = questions[currentQuestion].question;
                 for (const rating of ratingElements) {
                     rating.checked = false;
                 }
@@ -147,7 +183,7 @@
                 totalRating += q.answer;
             }
             const percentage = (totalRating / (questions.length * 5)) * 100;
-            resultElement.textContent = `Your score: ${percentage.toFixed(3)}%`;
+            resultElement.textContent = `Your score: ${percentage.toFixed(2)}%`;
             resultElement.style.display = "block";
         }
 
@@ -161,7 +197,7 @@
         nextButton.addEventListener("click", function () {
             currentQuestion++;
             showQuestion();
-        })
+        });
 
         showQuestion();
     </script>
