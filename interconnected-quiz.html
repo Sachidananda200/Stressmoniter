@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Rating Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #quiz-container {
+            text-align: center;
+            margin: 0 auto;
+            width: 50%;
+        }
+
+        #question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        #rating {
+            display: flex;
+            justify-content: center;
+        }
+
+        #result {
+            display: none;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container">
+        <h1>Quiz Rating Game</h1>
+        <p id="question"></p>
+        <div id="rating">
+            <input type="radio" name="rating" value="1"> 1
+            <input type="radio" name="rating" value="2"> 2
+            <input type="radio" name="rating" value="3"> 3
+            <input type="radio" name="rating" value="4"> 4
+            <input type="radio" name="rating" value="5"> 5
+        </div>
+        <button id="next-button">Next</button>
+        <p id="result">Quiz Complete!</p>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "How would you rate this quiz so far?",
+                answer: 0,
+            },
+            {
+                question: "Rate the ease of use of this quiz interface.",
+                answer: 0,
+            },
+            {
+                question: "Overall, how helpful was this quiz to you?",
+                answer: 0,
+            },
+        ];
+
+        let currentQuestion = 0;
+        const questionElement = document.getElementById("question");
+        const ratingElements = document.getElementsByName("rating");
+        const nextButton = document.getElementById("next-button");
+        const resultElement = document.getElementById("result");
+
+        function showQuestion() {
+            if (currentQuestion < questions.length) {
+                questionElement.textContent = questions[currentQuestion].question;
+                for (const rating of ratingElements) {
+                    rating.checked = false;
+                }
+                nextButton.disabled = true;
+            } else {
+                calculateScore();
+            }
+        }
+
+        function calculateScore() {
+            let totalRating = 0;
+            for (const q of questions) {
+                totalRating += q.answer;
+            }
+            const percentage = (totalRating / (questions.length * 5)) * 100;
+            resultElement.textContent = `Your score: ${percentage.toFixed(2)}%`;
+            resultElement.style.display = "block";
+        }
+
+        for (const rating of ratingElements) {
+            rating.addEventListener("change", function () {
+                questions[currentQuestion].answer = parseInt(this.value);
+                nextButton.disabled = false;
+            });
+        }
+
+        nextButton.addEventListener("click", function () {
+            currentQuestion++;
+            showQuestion();
+        });
+
+        showQuestion();
+    </script>
+</body>
+</html>
