@@ -62,7 +62,7 @@
     </div>
 
     <script>
-        // An array to store quiz questions
+       
         let quizQuestions = [];
 
         function addQuiz() {
@@ -97,7 +97,7 @@
             });
         }
 
-        // Load quiz questions from local storage on page load
+       
         quizQuestions = JSON.parse(localStorage.getItem("quizQuestions")) || [];
         displayQuizQuestions();
     </script>
